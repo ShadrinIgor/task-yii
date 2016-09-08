@@ -6,7 +6,7 @@
  * Time: 0:04
  */
 
-namespace Plp\Task;
+//namespace Plp\Task;
 
 
 class UserException extends \Exception

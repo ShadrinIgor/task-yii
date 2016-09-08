@@ -19,6 +19,7 @@ return array(
 
     // autoloading model and component classes
     'import'=>array(
+        'application.components.*',
         'application.models.*',
     ),
 
@@ -85,13 +86,8 @@ return array(
             'class'=>'CLogRouter',
             'routes'=>array(
                 array(
-                    'class'=>'CEmailLogRoute',
-                    'levels'=>'error, warning',
-                    'emails'=>'support@site.ru',
-                ),
-                array(
                     'class'=>'CFileLogRoute',
-                    'levels'=>'trace, info',
+                    'levels'=>'trace, info, error, warning',
                     'categories'=>'system.*',
                 ),
 /*                array(

@@ -6,7 +6,7 @@
  * Time: 23:35
  */
 
-namespace Plp\Task;
+//namespace Plp\Task;
 
 
 class account
@@ -16,8 +16,4 @@ class account
         return true;
     }
 
-    static function sms( $params )
-    {
-        return true;
-    }
 }
