@@ -6,9 +6,6 @@
  * Time: 23:35
  */
 
-//namespace Plp\Task;
-
-
 class account
 {
     static function bill( $params )

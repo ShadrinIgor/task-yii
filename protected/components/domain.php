@@ -6,9 +6,6 @@
  * Time: 23:34
  */
 
-//namespace Plp\Task;
-
-
 class domain
 {
     static function addzone( $params )
@@ -16,3 +13,4 @@ class domain
         return true;
     }
 }
+

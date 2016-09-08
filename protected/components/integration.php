@@ -6,8 +6,6 @@
  * Time: 23:34
  */
 
-//namespace Plp\Task;
-
 class integration
 {
     static function process( $params )
