@@ -114,7 +114,7 @@ return array(
     // using Yii::app()->params['paramName']
     'params'=>array(
 
-        "baseUrl"=>"http://yii/",
+        "baseUrl"=>"http://task-yii/",
 
         /*
         * для кэширования виджетов, все что вам надо, это добавить массив с названием виджета, без прифекса _Widget

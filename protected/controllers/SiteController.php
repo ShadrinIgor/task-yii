@@ -5,8 +5,6 @@
  */
 class SiteController extends CController
 {
-    protected $p;
-
     public function init()
     {
     }
@@ -21,57 +19,50 @@ class SiteController extends CController
     }
 
 	/**
-	 * Task 4
+	 * Дефолтове действие
 	 */
 	public function actionIndex()
 	{
-        $sql = "SELECT s.cx, s.title, r.ndc FROM `tb_source` s INNER JOIN ( SELECT cx, ndc FROM `tb_rel` GROUP BY cx ) r USING( cx ) WHERE INSTR( s.title, 'title 1' ) = 1";
+        $listTask = Task::model()->findAll( "status = 0" );
+        foreach( $listTask as $task ){
+            $class = $task->task;
+            $action = $task->action;
+            if( class_exists( $class ) && property_exists( $class, $action ) )  {
+                $params = json_decode( $task->data );
+                try{
+                    $result = $class::$action( $params );
+                }
+                catch( \Plp\Task\UserException $exeption ){
+                    if( $task->retries < 3 ){
+                        $task->retries ++;
+                        $task->deffer = date( "Y-m-d H:i", time() + 60*60 ); // Выставляет отсрочку следующего запуска на 1 час
+                        $task->save();
+                        continue;
+                    }
+                }
+                catch( \Plp\Task\FatalException $exeption ){
 
-        $rowsArray = [];
-        $list = TbSource::model()->findAllBySql( $sql );
-        foreach( $list as $obj ){
-            $rowsArray[] = [ $obj->getAttributes(false)["cx"], $obj->getAttributes(false)["title"] ];
+                }
+
+
+                if( $result !== false ){
+                    $task->status = 1;
+                    $task->finished = date("Y-m-d h:i");
+                    $task->result = $result;
+                    $task->save();
+                }
+            }
+                else {
+                    // Если класс не найден закрываем задачу с ошибкой
+                    $task->status = 2;
+                    $task->finished = date("Y-m-d h:i");
+                    $task->result = 'Error: no exists '.$class."::".$action;
+                    $task->save();
+                }
+
         }
 
-		$this->render('index', [ "columnsArray"=>["cx", "ndc", "title"],  "rowsArray"=>$rowsArray ]);
 	}
 
-    public function actionTask5()
-    {
-        $sql = "SELECT s.cx, s.title, r.ndc FROM `tb_source` s INNER JOIN ( SELECT cx, ndc FROM `tb_rel` GROUP BY cx ) r USING( cx ) WHERE INSTR( s.title, 'title 1' ) = 1";
-        $sql2 = "SELECT count( s.cx ) as count FROM `tb_source` s INNER JOIN ( SELECT cx, ndc FROM `tb_rel` GROUP BY cx ) r USING( cx ) WHERE INSTR( s.title, 'title 1' ) = 1";
-        $count = Yii::app()->db->createCommand( $sql2 )->queryScalar();
-
-        $model = new CSqlDataProvider( $sql, array(
-            'keyField' => 'cx',
-            'totalItemCount' => $count,
-            'sort' => array(
-                'attributes' => array(
-                    'cx', 'ndc'
-                ),
-                'defaultOrder' => array(
-                    'cx' => CSort::SORT_ASC,
-                ),
-            ),
-            'pagination' => array(
-                'pageSize' => 25,
-            ),
-        ));
-
-        $this->render('task5', [ "model"=>$model ]);
-    }
-
-    public function actionTask6()
-    {
-        $sql = "SELECT s.cx, s.title, r.ndc FROM `tb_source` s INNER JOIN ( SELECT cx, ndc FROM `tb_rel` GROUP BY cx ) r USING( cx ) WHERE INSTR( s.title, 'title 1' ) = 1";
-
-        $rowsArray = [];
-        $list = TbSource::model()->cache(1000)->findAllBySql( $sql );
-        foreach( $list as $obj ){
-            $rowsArray[] = [ $obj->getAttributes(false)["cx"], $obj->getAttributes(false)["title"] ];
-        }
-
-        $this->render('task6', [ "columnsArray"=>["cx", "ndc", "title"],  "rowsArray"=>$rowsArray ]);
-    }
 }
 
