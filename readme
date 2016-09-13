@@ -1,0 +1,11 @@
+Для установки необходимо:
+    1. Установить базу 2 данных, 1- рабочая, 2- для тестов
+    2. Импортировать в 1-ую базу файл protected/data/task.sql
+    3. Импортировать в 2-ую базу файл protected/data/task-test.sql
+    4. Прописать в настройках название 1-ой базы protected/config/main.php 73-я строка
+    5. Прописать в настройках название 2-ой базы protected/config/test.php 8-я строка
+    6. Установить связи из Composer
+            php C:\path\protected\composer.phar install
+    7. Для запуска теста использовать
+        % cd your_path/protected/tests
+        % php ../vendor/phpunit/phpunit/phpunit unit/Test1
