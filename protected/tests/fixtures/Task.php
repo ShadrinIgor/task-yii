@@ -1,0 +1,31 @@
+<?php
+return array(
+    'sample1'=>array(
+        'id'=>'2971107',
+        'account_id'=>'83992',
+        'task'=>'domain',
+        'action'=>'addzone',
+        'data'=>'{"domain":"mydomain.ru"}',
+        'status'=>0,
+        'retries'=>0,
+    ),
+    'sample2'=>array(
+        'id'=>'2971122',
+        'account_id'=>'9608',
+        'task'=>'integration',
+        'action'=>'process',
+        'data'=>'{"integration_id":2987,"lead_id":"2999570"}',
+        'status'=>1,
+        'retries'=>0,
+    ),
+    'sample3'=>array(
+        'id'=>'2971187',
+        'account_id'=>'81259',
+        'task'=>'account',
+        'action'=>'bill',
+        'data'=>'{"bill_id":"82029"}',
+        'status'=>0,
+        'retries'=>0,
+    ),
+
+);

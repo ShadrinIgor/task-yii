@@ -9,7 +9,7 @@
  */
 
 Yii::import('system.test.CTestCase');
-require_once('PHPUnit/Extensions/SeleniumTestCase.php');
+require_once('PHPUnit/Extensions/Selenium2TestCase.php');
 
 /**
  * CWebTestCase is the base class for Web-based functional test case classes.
@@ -23,7 +23,7 @@ require_once('PHPUnit/Extensions/SeleniumTestCase.php');
  * @package system.test
  * @since 1.1
  */
-abstract class CWebTestCase extends PHPUnit_Extensions_SeleniumTestCase
+abstract class CWebTestCase extends PHPUnit_Extensions_Selenium2TestCase
 {
 	/**
 	 * @var array a list of fixtures that should be loaded before each test method executes.
